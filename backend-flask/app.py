@@ -8,8 +8,9 @@ import jwt
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 from datetime import datetime
-import newrelic.agent
+
 try:
+    import newrelic.agent
     newrelic.agent.initialize(
         config_file='newrelic.ini',
         environment=None,
@@ -18,6 +19,7 @@ try:
     )
 except ImportError:
     print("New Relic import failed - monitoring disabled")
+
 app = Flask(__name__)
 CORS(app)
 
