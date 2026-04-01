@@ -1,0 +1,26 @@
+
+services:
+  backend-flask:
+    image: marc423/lms-backend:2.0.0
+    ports:
+      - "4000:4000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=app.py
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+      - NEW_RELIC_APP_NAME=${NEW_RELIC_APP_NAME:-LMS System - Backend}
+      - NEW_RELIC_ENVIRONMENT=${NEW_RELIC_ENVIRONMENT:-production}
+
+  frontend:
+    image: marc423/lms-frontend:2.0.0  # Replace with your Docker Hub username
+    pull_policy: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend-flask
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
